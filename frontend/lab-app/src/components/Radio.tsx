@@ -4,7 +4,7 @@ interface Props {
 
 export function Radio({ items }: Props) {
   return (
-    <div className=".container-sm">
+    <div className="container-sm p-2 m-2">
       {items.map((items) => (
         <div className="form-check form-control" key={items}>
           <input
