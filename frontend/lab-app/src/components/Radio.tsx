@@ -2,20 +2,22 @@ interface Props {
   items: string[];
 }
 
-export default function Radio({ items }: Props) {
-  items.map((items) => (
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="radio"
-        name="flexRadioDefault"
-        id="flexRadioDefault1"
-      />
-      <label className="form-check-label" htmlFor="flexRadioDefault1">
-        {items}
-      </label>
+export function Radio({ items }: Props) {
+  return (
+    <div className=".container-sm">
+      {items.map((items) => (
+        <div className="form-check form-control" key={items}>
+          <input
+            className="form-check-input"
+            type="radio"
+            name="flexRadioDefault"
+            id={`flexradiodefault${items}`}
+          />
+          <label className="form-check-label" htmlFor="flexRadioDefault1">
+            {`${items}`}
+          </label>
+        </div>
+      ))}
     </div>
-  ));
-
-  return <>{items}</>;
+  );
 }
