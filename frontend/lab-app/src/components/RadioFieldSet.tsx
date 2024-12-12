@@ -1,29 +1,32 @@
-import { ReactNode } from "react";
-
-interface Props {
-  items: string[];
-  itemsvalues: string[];
-  children?: ReactNode;
+interface RadioFieldSetProps {
+  legend: string;
+  options: { id: string; value: string; label: string; disabled?: boolean }[];
 }
 
-export function RadioFieldSet({ items, itemsvalues, children }: Props) {
+export function RadioFieldSet({ legend, options }: RadioFieldSetProps) {
   return (
-    <div className="mb-3">
-      {children && <span className="mb-2 d-block">{children}</span>}
-      {items.map((item, index) => (
-        <div className="form-check" key={index}>
-          <input
-            className="form-check-input"
-            type="radio"
-            name="exampleRadios"
-            id={`exampleRadios${index}`}
-            value={itemsvalues[index]}
-          />
-          <label className="form-check-label" htmlFor={`exampleRadios${index}`}>
-            {item}
-          </label>
-        </div>
-      ))}
-    </div>
+    <fieldset className="row mb-3">
+      <legend className="col-form-label col-sm-2 pt-0">{legend}</legend>
+      <div className="col-sm-10">
+        {options.map((option) => (
+          <div
+            className={`form-check ${option.disabled ? "disabled" : ""}`}
+            key={option.id}
+          >
+            <input
+              className="form-check-input"
+              type="radio"
+              name="gridRadios"
+              id={option.id}
+              value={option.value}
+              disabled={option.disabled}
+            />
+            <label className="form-check-label" htmlFor={option.id}>
+              {option.label}
+            </label>
+          </div>
+        ))}
+      </div>
+    </fieldset>
   );
 }
