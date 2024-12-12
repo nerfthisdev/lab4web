@@ -1,28 +1,28 @@
-interface RadioFieldSetProps {
-  legend: string;
-  options: { id: string; value: string; label: string; disabled?: boolean }[];
+import { ReactNode } from "react";
+
+interface Props {
+  items: string[];
+  itemsvalues: string[];
+  children: ReactNode;
 }
 
-export function RadioFieldSet({ legend, options }: RadioFieldSetProps) {
+export function RadioFieldSet({ items, itemsvalues, children }: Props) {
   return (
     <fieldset className="row mb-3">
-      <legend className="col-form-label col-sm-2 pt-0">{legend}</legend>
+      <legend className="col-form-label col-sm-2 pt-0">{children}</legend>
       <div className="col-sm-10">
-        {options.map((option) => (
-          <div
-            className={`form-check ${option.disabled ? "disabled" : ""}`}
-            key={option.id}
-          >
+        {items.map((items, index) => (
+          <div className="form-check">
             <input
               className="form-check-input"
               type="radio"
               name="gridRadios"
-              id={option.id}
-              value={option.value}
-              disabled={option.disabled}
+              id={`gridRadios${index}`}
+              value={itemsvalues[index]}
+              checked
             />
-            <label className="form-check-label" htmlFor={option.id}>
-              {option.label}
+            <label className="form-check-label" htmlFor={`gridRadios${index}`}>
+              {items}
             </label>
           </div>
         ))}
