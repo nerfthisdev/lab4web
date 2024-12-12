@@ -1,32 +1,29 @@
 import { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode;
   items: string[];
   itemsvalues: string[];
+  children?: ReactNode;
 }
 
-export function RadioFieldSet({ children, items, itemsvalues }: Props) {
+export function RadioFieldSet({ items, itemsvalues, children }: Props) {
   return (
-    <fieldset className="row mb-3">
-      <legend className="col-form-label col-sm-2 pt-0">{children}</legend>
-      <div className="col-sm-10">
-        {items.map((items, index) => (
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="gridRadios"
-              id={`gridRadios${index}`}
-              value={itemsvalues[index]}
-              checked
-            />
-            <label className="form-check-label" htmlFor={`gridRadios${index}`}>
-              {items}
-            </label>
-          </div>
-        ))}
-      </div>
-    </fieldset>
+    <div className="mb-3">
+      {children && <span className="mb-2 d-block">{children}</span>}
+      {items.map((item, index) => (
+        <div className="form-check" key={index}>
+          <input
+            className="form-check-input"
+            type="radio"
+            name="exampleRadios"
+            id={`exampleRadios${index}`}
+            value={itemsvalues[index]}
+          />
+          <label className="form-check-label" htmlFor={`exampleRadios${index}`}>
+            {item}
+          </label>
+        </div>
+      ))}
+    </div>
   );
 }

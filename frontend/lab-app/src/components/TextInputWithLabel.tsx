@@ -13,7 +13,7 @@ export function TextInputWithLabel({ children, inputId }: Props) {
           {children}
         </label>
         <div className="col-sm-10">
-          <input type="email" className="form-control" id={inputId}></input>
+          <input type="" className="form-control" id={inputId}></input>
         </div>
       </div>
     </>
