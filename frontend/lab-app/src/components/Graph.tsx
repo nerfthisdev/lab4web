@@ -1,11 +1,10 @@
 import { Mafs, Coordinates, Polyline, Theme, Polygon, Plot } from "mafs";
 
 export function Graph() {
-  const a = [-2.5, 0] as [number, number];
+  const radius = 5;
+  const a = [-(radius / 2), 0] as [number, number];
   const b = [0, 5] as [number, number];
   const c = [0, 0] as [number, number];
-
-  const radius = 5;
 
   const upperBoundary = (x: number) =>
     x <= 0 && x >= -radius ? -Math.sqrt(radius ** 2 - x ** 2) : NaN;
