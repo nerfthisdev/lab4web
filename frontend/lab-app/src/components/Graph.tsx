@@ -1,4 +1,4 @@
-import { Mafs, Coordinates, Polyline, Theme, Polygon, Plot } from "mafs";
+import { Mafs, Coordinates, Theme, Polygon, Plot } from "mafs";
 
 export function Graph() {
   const radius = 5;
