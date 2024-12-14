@@ -3,7 +3,7 @@ import { Mafs, Coordinates, Theme, Polygon, Plot } from "mafs";
 export function Graph() {
   const radius = 5;
   const a = [-(radius / 2), 0] as [number, number];
-  const b = [0, 5] as [number, number];
+  const b = [0, radius] as [number, number];
   const c = [0, 0] as [number, number];
 
   const d = [0, -radius] as [number, number];

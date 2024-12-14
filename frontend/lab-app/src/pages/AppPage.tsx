@@ -19,7 +19,7 @@ export function AppPage() {
       className="d-flex justify-content-center align-items-center overflow-hidden"
       style={containerBoxStyle}
     >
-      <div className="box-with-inputs bg-dark text-white p-4 rounded shadow-sm overflow-hidden">
+      <div className="box-with-inputs bg-dark text-white p-4 rounded shadow overflow-hidden ">
         <TextInputWithLabel inputId="x2" label="X:" />
         <TextInputWithLabel inputId="y2" label="Y:" />
         <RadioFieldSet items={values} itemsvalues={values}>

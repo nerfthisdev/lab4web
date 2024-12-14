@@ -4,19 +4,9 @@ interface Props {
   items: string[];
   itemsvalues: string[];
   children: ReactNode;
-  onChange: (value: string) => void;
 }
 
-export function RadioFieldSet({
-  items,
-  itemsvalues,
-  children,
-  onChange,
-}: Props) {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value); // Pass the selected value to the parent
-  };
-
+export function RadioFieldSet({ items, itemsvalues, children }: Props) {
   return (
     <fieldset className="row mb-3">
       <legend className="col-form-label col-sm-2 pt-0">{children}</legend>
