@@ -6,6 +6,10 @@ export function Graph() {
   const b = [0, 5] as [number, number];
   const c = [0, 0] as [number, number];
 
+  const d = [0, -radius] as [number, number];
+  const e = [radius, 0] as [number, number];
+  const f = [radius, -radius] as [number, number];
+
   const upperBoundary = (x: number) =>
     x <= 0 && x >= -radius ? -Math.sqrt(radius ** 2 - x ** 2) : NaN;
 
@@ -22,6 +26,7 @@ export function Graph() {
         color={Theme.blue}
       />
       <Polygon points={[c, a, b]} color={Theme.blue} />
+      <Polygon points={[c, e, f, d]} color={Theme.blue} />
     </Mafs>
   );
 }
