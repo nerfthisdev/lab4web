@@ -11,7 +11,11 @@ const initialState: RadiusState = {
 const radiusSlice = createSlice({
   name: "radius",
   initialState,
-  reducers: {},
+  reducers: {
+    setRadius: (state, action) => {
+      state.value = action.payload; // Update the state with the selected radius
+    },
+  },
 });
 
 export default radiusSlice.reducer;
