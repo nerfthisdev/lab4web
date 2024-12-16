@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-
+import radiusReducer from "./radius/radiusSlice";
 
 export const store = configureStore({
-    reducer: {}
-})
+  reducer: { radiusReducer },
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 
