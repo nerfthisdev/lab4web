@@ -13,8 +13,23 @@ export function Graph() {
   const dispatch = useDispatch();
   const points = useSelector((state: RootState) => state.points.pointsArray);
 
+  const pointExists = (checkedPoint: vec.Vector2, threshold = 0.001) => {
+    return points.some(
+      (point) =>
+        Math.abs(point[0] - checkedPoint[0]) < threshold &&
+        Math.abs(point[1] - checkedPoint[1]) < threshold
+    );
+  };
+
   const handleClick = (clickedPoint: vec.Vector2) => {
+    if (pointExists(clickedPoint)) {
+      console.log(
+        `Point already exists near x: ${clickedPoint[0]}, y: ${clickedPoint[1]}`
+      );
+    }
+
     dispatch(addPoint(clickedPoint));
+    console.log(`Added point: x: ${clickedPoint[0]}, y: ${clickedPoint[1]} `);
   };
 
   const radius = useSelector((state: RootState) => state.radius.value);
