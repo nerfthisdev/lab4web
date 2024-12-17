@@ -3,7 +3,20 @@ import { Mafs, Coordinates, Theme, Polygon, Plot } from "mafs";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
+import { useState } from "react";
+
+import { vec } from "mafs";
+
+import { Point } from "mafs";
+
 export function Graph() {
+  const [point, setPoint] = useState<vec.Vector2 | null>(null);
+
+  const handleClick = (point: vec.Vector2, event: MouseEvent) => {
+    console.log("Clicked point: ", point);
+    setPoint(point);
+  };
+
   const radius = useSelector((state: RootState) => state.radiusReducer.value);
   const a = [-(radius / 2), 0] as [number, number];
   const b = [0, radius] as [number, number];
@@ -19,8 +32,15 @@ export function Graph() {
   const lowerBoundary = (x: number) => (x <= 0 && x >= -radius ? 0 : NaN);
 
   return (
-    <Mafs width={500} height={500} viewBox={{ x: [-6, 6], y: [-6, 6] }}>
+    <Mafs
+      width={500}
+      height={500}
+      viewBox={{ x: [-6, 6], y: [-6, 6] }}
+      onClick={handleClick}
+      pan={false}
+    >
       <Coordinates.Cartesian />
+      {point && <Point x={point[0]} y={point[1]} color="blue" />}
       <Plot.Inequality
         y={{
           ">=": upperBoundary,
