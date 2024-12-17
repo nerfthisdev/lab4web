@@ -12,9 +12,7 @@ interface Props {
 export function RadioFieldSet({ items, itemsvalues, children }: Props) {
   const dispatch = useDispatch();
 
-  const selectedRadius = useSelector(
-    (state: RootState) => state.radiusReducer.value
-  );
+  const selectedRadius = useSelector((state: RootState) => state.radius.value);
 
   const handleChange = (value: number) => {
     dispatch(setRadius(value));
