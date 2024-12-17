@@ -1,7 +1,10 @@
 import { Mafs, Coordinates, Theme, Polygon, Plot } from "mafs";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
+
 export function Graph() {
-  const radius = 5;
+  const radius = useSelector((state: RootState) => state.radiusReducer.value);
   const a = [-(radius / 2), 0] as [number, number];
   const b = [0, radius] as [number, number];
   const c = [0, 0] as [number, number];
