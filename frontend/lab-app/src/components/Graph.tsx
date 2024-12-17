@@ -40,9 +40,6 @@ export function Graph() {
       pan={false}
     >
       <Coordinates.Cartesian />
-      {points.map((point, index) => (
-        <Point key={index} x={point[0]} y={point[1]} color="blue" />
-      ))}
       <Plot.Inequality
         y={{
           ">=": upperBoundary,
@@ -52,6 +49,9 @@ export function Graph() {
       />
       <Polygon points={[c, a, b]} color={Theme.blue} />
       <Polygon points={[c, e, f, d]} color={Theme.blue} />
+      {points.map((point, index) => (
+        <Point key={index} x={point[0]} y={point[1]} />
+      ))}
     </Mafs>
   );
 }
