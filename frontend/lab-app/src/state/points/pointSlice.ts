@@ -26,6 +26,6 @@ const pointSlice = createSlice({
   },
 });
 
-export const { addPoint } = pointSlice.actions;
+export const { addPoint, removePoint, clearPoints } = pointSlice.actions;
 
 export default pointSlice.reducer;
