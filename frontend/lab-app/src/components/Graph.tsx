@@ -26,6 +26,7 @@ export function Graph() {
       console.log(
         `Point already exists near x: ${clickedPoint[0]}, y: ${clickedPoint[1]}`
       );
+      return;
     }
 
     dispatch(addPoint(clickedPoint));
