@@ -11,29 +11,31 @@ import { useDispatch } from "react-redux";
 
 export function Graph() {
   const dispatch = useDispatch();
-  const points = useSelector((state: RootState) => state.points.pointsArray);
+  const radius = useSelector((state: RootState) => state.radius.value);
+  const points = useSelector((state: RootState) =>
+    state.points.pointsArray.filter((point) => point.radius === radius)
+  );
 
-  const pointExists = (checkedPoint: vec.Vector2, threshold = 0.001) => {
+  const pointExists = (x: number, y: number, threshold = 0.001) => {
     return points.some(
       (point) =>
-        Math.abs(point[0] - checkedPoint[0]) < threshold &&
-        Math.abs(point[1] - checkedPoint[1]) < threshold
+        Math.abs(point.pos[0] - x) < threshold &&
+        Math.abs(point.pos[1] - y) < threshold
     );
   };
 
   const handleClick = (clickedPoint: vec.Vector2) => {
-    if (pointExists(clickedPoint)) {
+    if (pointExists(clickedPoint[0], clickedPoint[1])) {
       console.log(
         `Point already exists near x: ${clickedPoint[0]}, y: ${clickedPoint[1]}`
       );
       return;
     }
 
-    dispatch(addPoint(clickedPoint));
+    dispatch(addPoint({ pos: clickedPoint, radius }));
     console.log(`Added point: x: ${clickedPoint[0]}, y: ${clickedPoint[1]} `);
   };
 
-  const radius = useSelector((state: RootState) => state.radius.value);
   const a = [-(radius / 2), 0] as [number, number];
   const b = [0, radius] as [number, number];
   const c = [0, 0] as [number, number];
@@ -66,7 +68,7 @@ export function Graph() {
       <Polygon points={[c, a, b]} color={Theme.blue} />
       <Polygon points={[c, e, f, d]} color={Theme.blue} />
       {points.map((point, index) => (
-        <Point key={index} x={point[0]} y={point[1]} />
+        <Point key={index} x={point.pos[0]} y={point.pos[1]} />
       ))}
     </Mafs>
   );

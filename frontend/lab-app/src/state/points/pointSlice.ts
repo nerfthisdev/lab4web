@@ -2,23 +2,28 @@ import { createSlice } from "@reduxjs/toolkit";
 import { vec } from "mafs";
 import { PayloadAction } from "@reduxjs/toolkit";
 
+interface Point {
+  pos: vec.Vector2;
+  radius: number;
+}
+
 interface PointState {
-  pointsArray: vec.Vector2[];
+  pointsArray: Point[];
 }
 
 const initialState: PointState = {
   pointsArray: [],
 };
 
-const pointSlice = createSlice({
+const pointsSlice = createSlice({
   name: "points",
   initialState,
   reducers: {
-    addPoint: (state, action: PayloadAction<vec.Vector2>) => {
+    addPoint: (
+      state,
+      action: PayloadAction<{ pos: vec.Vector2; radius: number }>
+    ) => {
       state.pointsArray.push(action.payload);
-    },
-    removePoint: (state, action: PayloadAction<number>) => {
-      state.pointsArray.splice(action.payload, 1);
     },
     clearPoints: (state) => {
       state.pointsArray = [];
@@ -26,6 +31,6 @@ const pointSlice = createSlice({
   },
 });
 
-export const { addPoint, removePoint, clearPoints } = pointSlice.actions;
+export const { addPoint, clearPoints } = pointsSlice.actions;
 
-export default pointSlice.reducer;
+export default pointsSlice.reducer;
