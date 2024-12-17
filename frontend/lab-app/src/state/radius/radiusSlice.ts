@@ -5,7 +5,7 @@ interface RadiusState {
 }
 
 const initialState: RadiusState = {
-  value: 0,
+  value: 1,
 };
 
 const radiusSlice = createSlice({
@@ -13,9 +13,11 @@ const radiusSlice = createSlice({
   initialState,
   reducers: {
     setRadius: (state, action) => {
-      state.value = action.payload; // Update the state with the selected radius
+      state.value = action.payload;
     },
   },
 });
+
+export const { setRadius } = radiusSlice.actions;
 
 export default radiusSlice.reducer;
