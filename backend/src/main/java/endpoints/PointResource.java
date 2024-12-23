@@ -8,6 +8,7 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/point")
 public class PointResource {
 
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String sayHello() {

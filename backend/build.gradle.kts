@@ -17,6 +17,9 @@ dependencies {
     implementation("org.glassfish.jersey.containers:jersey-container-servlet")
     implementation("org.glassfish.jersey.inject:jersey-hk2")
     implementation("com.google.code.gson:gson:2.11.0")
+    implementation("co.elastic.clients:elasticsearch-java:8.17.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
+    implementation("org.elasticsearch:elasticsearch:8.17.0")
 }
 
 tasks.test {
