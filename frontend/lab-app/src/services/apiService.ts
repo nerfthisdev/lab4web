@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8080/backend/api/",
+  baseURL: "http://localhost:23563/backend/api/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,6 +12,15 @@ export const sendPoint = async (data: {
   y: number;
   radius: number;
 }) => {
-  const response = await apiClient.post("/points", data);
+  const { x, y, radius } = data;
+
+  const payload = {
+    x,
+    y,
+    r: radius, // Map 'radius' to 'r'
+    flag: false, // Include the 'flag' property
+  };
+
+  const response = await apiClient.post("/validatepoint", payload);
   return response.data;
 };
