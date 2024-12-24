@@ -8,6 +8,7 @@ import { addPoint } from "../state/points/pointSlice";
 
 import { Point } from "mafs";
 import { useDispatch } from "react-redux";
+import { sendPoint } from "../services/apiService";
 
 export function Graph() {
   const dispatch = useDispatch();
@@ -24,16 +25,21 @@ export function Graph() {
     );
   };
 
-  const handleClick = (clickedPoint: vec.Vector2) => {
-    if (pointExists(clickedPoint[0], clickedPoint[1])) {
+  const handleClick = async (clickedPoint: vec.Vector2) => {
+    const [x, y] = clickedPoint;
+    if (pointExists(x, y)) {
       console.log(
         `Point already exists near x: ${clickedPoint[0]}, y: ${clickedPoint[1]}`
       );
       return;
     }
-
-    dispatch(addPoint({ pos: clickedPoint, radius }));
-    console.log(`Added point: x: ${clickedPoint[0]}, y: ${clickedPoint[1]} `);
+    try {
+      const response = await sendPoint({ x, y, radius });
+      dispatch(addPoint({ pos: clickedPoint, radius }));
+      console.log("Point saved to backend:", response);
+    } catch (error) {
+      console.error("Error saving point to backend");
+    }
   };
 
   const a = [-(radius / 2), 0] as [number, number];
