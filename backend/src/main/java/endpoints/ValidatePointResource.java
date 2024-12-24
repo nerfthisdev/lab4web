@@ -7,10 +7,7 @@ import data.GeometryValidator;
 import data.Point;
 import elasticlogic.ElasticClient;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -37,5 +34,13 @@ public class ValidatePointResource {
                     .entity("{\"error\":\"" + e.getMessage() + "\"}")
                     .build();
         }
+    }
+    @OPTIONS
+    public Response preflight() {
+        return Response.ok()
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+                .build();
     }
 }
