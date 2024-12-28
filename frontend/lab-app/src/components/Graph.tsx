@@ -35,7 +35,7 @@ export function Graph() {
     }
     try {
       const response = await sendPoint({ x, y, radius });
-      dispatch(addPoint({ pos: clickedPoint, radius }));
+      dispatch(addPoint({ pos: clickedPoint, radius, flag: response.flag }));
       console.log("Point saved to backend:", response);
     } catch (error) {
       console.error("Error saving point to backend");
@@ -74,7 +74,12 @@ export function Graph() {
       <Polygon points={[c, a, b]} color={Theme.blue} />
       <Polygon points={[c, e, f, d]} color={Theme.blue} />
       {points.map((point, index) => (
-        <Point key={index} x={point.pos[0]} y={point.pos[1]} />
+        <Point
+          key={index}
+          x={point.pos[0]}
+          y={point.pos[1]}
+          color={point.flag ? "blue" : "red"}
+        />
       ))}
     </Mafs>
   );
