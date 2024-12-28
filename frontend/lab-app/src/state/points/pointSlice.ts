@@ -5,6 +5,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 interface Point {
   pos: vec.Vector2;
   radius: number;
+  flag: boolean;
 }
 
 interface PointState {
@@ -21,7 +22,7 @@ const pointsSlice = createSlice({
   reducers: {
     addPoint: (
       state,
-      action: PayloadAction<{ pos: vec.Vector2; radius: number }>
+      action: PayloadAction<{ pos: vec.Vector2; radius: number; flag: boolean }>
     ) => {
       state.pointsArray.push(action.payload);
     },
