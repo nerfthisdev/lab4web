@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { vec } from "mafs";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { apiClient } from "../../services/apiService";
+import { toast } from "react-toastify";
 
 interface Point {
   pos: vec.Vector2;
@@ -10,11 +12,43 @@ interface Point {
 
 interface PointState {
   pointsArray: Point[];
+  status: string;
+  error: string | undefined;
 }
 
 const initialState: PointState = {
   pointsArray: [],
+  status: "idle",
+  error: undefined,
 };
+
+export const fetchPoints = createAsyncThunk("posts/fetchPoints", async () => {
+  const toastId = toast.loading("Fetching points...");
+
+  try {
+    const response = await apiClient.get("/point");
+
+    toast.update(toastId, {
+      render: "Points successfully fetched!",
+      type: "success",
+      isLoading: false,
+      autoClose: 3000,
+    });
+
+    console.log("fetched points", response.data);
+
+    return response.data;
+  } catch (error: any) {
+    toast.update(toastId, {
+      render: `Error: ${error.response?.data?.message || error.message}`,
+      type: "error",
+      isLoading: false,
+      autoClose: 5000,
+    });
+
+    return error.message;
+  }
+});
 
 const pointsSlice = createSlice({
   name: "points",
@@ -29,6 +63,28 @@ const pointsSlice = createSlice({
     clearPoints: (state) => {
       state.pointsArray = [];
     },
+    setPoints: (state, action: PayloadAction<Point[]>) => {
+      state.pointsArray = action.payload;
+    },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchPoints.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchPoints.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const loadedPoints = action.payload.map((point: any) => ({
+          pos: { x: point.x, y: point.y },
+          radius: point.r,
+          flag: point.flag,
+        }));
+        state.pointsArray = loadedPoints;
+      })
+      .addCase(fetchPoints.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
 });
 
