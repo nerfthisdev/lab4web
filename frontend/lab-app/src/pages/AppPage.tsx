@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { addPoint } from "../state/points/pointSlice";
 import { Bounce, ToastContainer } from "react-toastify";
+import DataTable from "../components/DataTable";
 
 const containerBoxStyle: CSSProperties = {
   height: "90vh",
@@ -89,6 +90,7 @@ export function AppPage() {
       <div className="ms-4 rounded-4 border border-1 overflow-hidden">
         <Graph />
       </div>
+      <DataTable />
     </div>
   );
 }
