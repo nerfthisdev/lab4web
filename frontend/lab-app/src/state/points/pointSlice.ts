@@ -69,7 +69,7 @@ const pointsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchPoints.pending, (state, action) => {
+      .addCase(fetchPoints.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchPoints.fulfilled, (state, action) => {
