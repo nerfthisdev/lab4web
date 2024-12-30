@@ -8,6 +8,8 @@ import { sendPoint } from "../services/apiService";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { addPoint } from "../state/points/pointSlice";
+import Toast from "../components/Toast";
+import { Bounce, ToastContainer } from "react-toastify";
 
 const containerBoxStyle: CSSProperties = {
   height: "90vh",
@@ -54,6 +56,18 @@ export function AppPage() {
       className="d-flex justify-content-center align-items-center overflow-hidden"
       style={containerBoxStyle}
     >
+      <ToastContainer
+        position="bottom-right"
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
       <div className="box-with-inputs bg-dark text-white p-4 rounded shadow overflow-hidden ">
         <TextInputWithLabel
           inputId="x2"
@@ -76,6 +90,7 @@ export function AppPage() {
       <div className="ms-4 rounded-4 border border-1 overflow-hidden">
         <Graph />
       </div>
+      <Toast></Toast>
     </div>
   );
 }
