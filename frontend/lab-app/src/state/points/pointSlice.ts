@@ -35,7 +35,7 @@ export const fetchPoints = createAsyncThunk("posts/fetchPoints", async () => {
       autoClose: 3000,
     });
 
-    console.log("fetched points", response.data);
+    console.log(response.data);
 
     return response.data;
   } catch (error: any) {
@@ -75,7 +75,7 @@ const pointsSlice = createSlice({
       .addCase(fetchPoints.fulfilled, (state, action) => {
         state.status = "succeeded";
         const loadedPoints = action.payload.map((point: any) => ({
-          pos: { x: point.x, y: point.y },
+          pos: [point.x, point.y],
           radius: point.r,
           flag: point.flag,
         }));
