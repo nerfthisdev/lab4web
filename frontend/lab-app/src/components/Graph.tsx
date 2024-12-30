@@ -1,21 +1,26 @@
 import { Mafs, Coordinates, Theme, Polygon, Plot } from "mafs";
-
 import { useSelector } from "react-redux";
-import { RootState } from "../state/store";
+import { AppDispatch, RootState } from "../state/store";
 import { vec } from "mafs";
-
-import { addPoint } from "../state/points/pointSlice";
-
+import { addPoint, fetchPoints } from "../state/points/pointSlice";
 import { Point } from "mafs";
 import { useDispatch } from "react-redux";
 import { sendPoint } from "../services/apiService";
+import { useEffect } from "react";
 
 export function Graph() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const radius = useSelector((state: RootState) => state.radius.value);
   const points = useSelector((state: RootState) =>
     state.points.pointsArray.filter((point) => point.radius === radius)
   );
+  const pointStatus = useSelector((state: RootState) => state.points.status);
+
+  useEffect(() => {
+    if (pointStatus === "idle") {
+      dispatch(fetchPoints());
+    }
+  }, [pointStatus, dispatch]);
 
   const pointExists = (x: number, y: number, threshold = 0.001) => {
     return points.some(
