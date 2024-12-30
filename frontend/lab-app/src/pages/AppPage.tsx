@@ -8,7 +8,6 @@ import { sendPoint } from "../services/apiService";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { addPoint } from "../state/points/pointSlice";
-import Toast from "../components/Toast";
 import { Bounce, ToastContainer } from "react-toastify";
 
 const containerBoxStyle: CSSProperties = {
@@ -90,7 +89,6 @@ export function AppPage() {
       <div className="ms-4 rounded-4 border border-1 overflow-hidden">
         <Graph />
       </div>
-      <Toast></Toast>
     </div>
   );
 }
