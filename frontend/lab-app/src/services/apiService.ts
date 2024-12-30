@@ -1,8 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// Create the Axios instance
-const apiClient = axios.create({
+export const apiClient = axios.create({
   baseURL: "http://localhost:23563/backend/api/",
   headers: {
     "Content-Type": "application/json",
