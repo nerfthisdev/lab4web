@@ -35,6 +35,9 @@ export function NavBar() {
             <Link className="nav-link" to="/about">
               About
             </Link>
+            <Link className="nav-link" to="/login">
+              login
+            </Link>
             <span className="nav-link disabled" aria-disabled="true">
               Log visualisation
             </span>
