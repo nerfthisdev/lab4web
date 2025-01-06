@@ -1,6 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export function NavBar() {
+  const location = useLocation();
+  if (location.pathname === "/signup") {
+    return null;
+  }
+
   return (
     <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
       <div className="container-fluid">
