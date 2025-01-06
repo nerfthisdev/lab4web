@@ -1,33 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function handleSubmit(event: React.SyntheticEvent) {
-  event?.preventDefault();
-}
-
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%])/;
 
 export function LoginForm() {
   const userRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [user, setUser] = useState("");
   const [validName, setValiName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
-
-  const [formValid, setFormValid] = useState(false);
 
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
-  const [passwordFocus, setPasswordFocus] = useState(false);
 
-  const [matchPassword, setMatchPassword] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
+  const validateForm = () => {
+    const usernameValid = USER_REGEX.test(user);
+    const passwordValid = PWD_REGEX.test(password);
+    userRef.current?.setCustomValidity(`${usernameValid ? "" : "invalid"}`);
+    passwordRef.current?.setCustomValidity(`${passwordValid ? "" : "invalid"}`);
 
-  const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
+    formRef.current?.classList.remove("needs-validation");
+    formRef.current?.classList.add("was-validated");
+
+    return usernameValid && passwordValid;
+  };
+
+  function handleSubmit(event: React.SyntheticEvent) {
+    event?.preventDefault();
+    validateForm();
+  }
 
   useEffect(() => {
     userRef?.current?.focus();
@@ -45,8 +48,6 @@ export function LoginForm() {
     console.log(result);
     console.log(password);
     setValidPassword(result);
-    const match = password === matchPassword;
-    setValidMatch(match);
   }, [password]);
 
   return (
@@ -54,7 +55,8 @@ export function LoginForm() {
       <div className="card p-4" style={{ width: "20rem" }}>
         <form
           onSubmit={handleSubmit}
-          className={formValid ? "was-validated" : "needs-validation"}
+          className="needs-validation"
+          ref={formRef}
           noValidate
         >
           <div className="form-floating mb-3">
