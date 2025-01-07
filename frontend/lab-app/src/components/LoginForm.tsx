@@ -19,6 +19,10 @@ export function LoginForm() {
   const validateForm = () => {
     const usernameValid = USER_REGEX.test(user);
     const passwordValid = PWD_REGEX.test(password);
+
+    console.log(validName);
+    console.log(validPassword);
+
     userRef.current?.setCustomValidity(`${usernameValid ? "" : "invalid"}`);
     passwordRef.current?.setCustomValidity(`${passwordValid ? "" : "invalid"}`);
 
