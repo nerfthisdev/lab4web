@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%])/;
@@ -92,6 +93,14 @@ export function LoginForm() {
           <button type="submit" className="btn btn-primary w-100">
             Login
           </button>
+          <p>
+            <Link
+              to="/signup"
+              className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+            >
+              Sign-up
+            </Link>
+          </p>
         </form>
       </div>
     </div>
