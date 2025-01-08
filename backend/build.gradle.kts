@@ -20,6 +20,11 @@ dependencies {
     implementation("co.elastic.clients:elasticsearch-java:8.17.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
     implementation("org.elasticsearch:elasticsearch:8.17.0")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    implementation("org.postgresql:postgresql:42.6.0")
+    implementation("org.mindrot:jbcrypt:0.4")
 }
 
 tasks.test {
