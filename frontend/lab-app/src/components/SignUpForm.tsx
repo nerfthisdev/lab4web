@@ -1,10 +1,12 @@
 import { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signup } from "../services/apiService";
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%])/;
 
 export const SignUpForm = () => {
+  const navigate = useNavigate();
   const userRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const matchPasswordRef = useRef<HTMLInputElement>(null);
@@ -58,10 +60,17 @@ export const SignUpForm = () => {
     return usernameValid && passwordValid && validMatch;
   };
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  async function handleSubmit(event: React.SyntheticEvent) {
     event?.preventDefault();
-    validateForm();
-  };
+    if (!validateForm()) return;
+    const username = user;
+    try {
+      await signup({ username, password });
+      navigate("/login");
+    } catch (error) {
+      console.error("Signup failed", error);
+    }
+  }
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">

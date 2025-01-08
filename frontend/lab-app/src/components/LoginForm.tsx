@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../services/apiService";
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%])/;
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const userRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -32,9 +34,16 @@ export function LoginForm() {
     return usernameValid && passwordValid;
   };
 
-  function handleSubmit(event: React.SyntheticEvent) {
+  async function handleSubmit(event: React.SyntheticEvent) {
     event?.preventDefault();
-    validateForm();
+    if (!validateForm()) return;
+    const username = user;
+    try {
+      await login({ username, password });
+      navigate("/home");
+    } catch (error) {
+      console.error("Login failed", error);
+    }
   }
 
   useEffect(() => {
