@@ -3,6 +3,7 @@ package endpoints;
 
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import data.GeometryValidator;
 import data.Point;
 import elasticlogic.ElasticClient;
@@ -10,6 +11,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import util.Protected;
 
 
 @Consumes(MediaType.APPLICATION_JSON)
@@ -20,15 +22,17 @@ public class ValidatePointResource {
     ElasticClient elasticClient;
 
     @POST
+    @Protected
     public Response validatePoint(String json) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
 
             Point point = objectMapper.readValue(json, Point.class);
             point.setFlag(GeometryValidator.isInsideArea(point.getX(), point.getY(), point.getR()));
-            IndexResponse response = elasticClient.addPoint(point);
-            String responseJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(response.toString());
-            return Response.ok(responseJson).build();
+            elasticClient.addPoint(point);
+            ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String jsonPoint = ow.writeValueAsString(point);
+            return Response.ok(jsonPoint).build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("{\"error\":\"" + e.getMessage() + "\"}")
@@ -38,7 +42,7 @@ public class ValidatePointResource {
     @OPTIONS
     public Response preflight() {
         return Response.ok()
-                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
                 .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
                 .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .build();
