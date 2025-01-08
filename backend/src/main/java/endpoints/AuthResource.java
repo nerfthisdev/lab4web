@@ -19,17 +19,19 @@ public class AuthResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(Credentials credentials) {
-        String hashedPassword = PasswordUtil.hashPassword(credentials.getPassword());
-        boolean isAuthenticated = UserDAO.authenticateUser(credentials.getUsername(), hashedPassword);
-
-        if (isAuthenticated) {
-            String token = JwtUtil.generateToken(credentials.getUsername());
-            return Response.ok("{\"token\":\"" + token + "\"}").build();
-        } else {
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("{\"error\":\"Invalid username or password\"}")
-                    .build();
+        String storedHash = UserDAO.getStoredHashFromDatabase(credentials.getUsername());
+        if (storedHash == null) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("User not found").build();
         }
+
+        boolean passwordMatch = PasswordUtil.checkPassword(credentials.getPassword(), storedHash);
+
+        if (!passwordMatch) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid password").build();
+        }
+
+        String token = JwtUtil.generateToken(credentials.getUsername());
+        return Response.ok("{\"token\":\"" + token + "\"}").build();
     }
 
     @POST
