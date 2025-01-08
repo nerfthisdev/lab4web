@@ -31,10 +31,31 @@ public class UserDAO {
             pstmt.setString(1, username);
             pstmt.setString(2, hashedPassword);
             ResultSet rs = pstmt.executeQuery();
-            return rs.next(); // Returns true if a matching record is found
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
+    }
+    public static String getStoredHashFromDatabase(String username) {
+        String sql = "SELECT password FROM users WHERE username = ?";
+        String passwordHash = null;
+
+        try (Connection conn = DBConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+
+                passwordHash = rs.getString("password");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return passwordHash;
     }
 }

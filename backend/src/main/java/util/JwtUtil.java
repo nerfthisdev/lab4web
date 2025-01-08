@@ -10,7 +10,7 @@ import java.security.Key;
 import java.util.Date;
 
 public class JwtUtil {
-    private static final String SECRET_KEY = "bibabobabibaboba202!";
+    private static final String SECRET_KEY = "bibabobabibaboba202!pasdlknasdJASDNASOIDZXCZXCsadasd";
     private static final long EXP_TIME = 864000;
 
     private static final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
