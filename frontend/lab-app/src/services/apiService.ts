@@ -10,7 +10,7 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // Retrieve the token
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -78,6 +78,35 @@ export const login = async (credentials: {
     });
 
     return token;
+  } catch (error: any) {
+    toast.update(toastId, {
+      render: `Error: ${error.response?.data?.message || error.message}`,
+      type: "error",
+      isLoading: false,
+      autoClose: 5000,
+    });
+
+    throw error;
+  }
+};
+
+export const signup = async (credentials: {
+  username: string;
+  password: string;
+}) => {
+  const toastId = toast.loading("Creating account...");
+
+  try {
+    const response = await apiClient.post("/auth/register", credentials);
+
+    toast.update(toastId, {
+      render: "Account created successfully! Please log in.",
+      type: "success",
+      isLoading: false,
+      autoClose: 3000,
+    });
+
+    return response.data;
   } catch (error: any) {
     toast.update(toastId, {
       render: `Error: ${error.response?.data?.message || error.message}`,
