@@ -2,25 +2,24 @@ package elasticlogic;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
-import co.elastic.clients.elasticsearch.indices.GetIndexRequest;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import data.Point;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
-import jakarta.persistence.Index;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.message.BasicHeader;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.common.UUIDs;
-
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Named
@@ -50,6 +49,21 @@ public class ElasticClient implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getPoints() throws IOException {
+        SearchRequest sr = SearchRequest.of(r -> r.index("points").size(10000));
+        StringBuilder res = new StringBuilder("[ ");
+        var response = esClient.search(sr, Point.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Hit<Point>> hits = response.hits().hits();
+        for (Hit<Point> hit: hits) {
+            Point point = hit.source();
+            res.append(objectMapper.writeValueAsString(point)).append(", ");
+        }
+        res.replace(res.length()-2, res.length(), "]");
+
+        return res.toString();
     }
 
     public IndexResponse addPoint(Point point) throws IOException {
