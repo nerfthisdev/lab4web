@@ -48,4 +48,9 @@ public class Point {
     public void setFlag(boolean flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "Point [x=" + x + ", y=" + y + ", r=" + r + ", flag=" + flag + "]";
+    }
 }
