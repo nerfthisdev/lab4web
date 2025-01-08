@@ -94,3 +94,8 @@ export const logout = () => {
   localStorage.removeItem("token");
   toast.success("Logged out successfully!");
 };
+
+export const isAuthenticated = (): boolean => {
+  const token = localStorage.getItem("token");
+  return !!token;
+};
