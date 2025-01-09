@@ -49,7 +49,7 @@ export function NavBar() {
             </Link>
             <li className="nav-item">
               <a className="nav-link" onClick={handleLogout} href="#">
-                Link
+                Logout
               </a>
             </li>
           </div>
