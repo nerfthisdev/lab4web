@@ -8,7 +8,7 @@ export default function DataTable() {
   );
 
   return (
-    <table>
+    <table className="table table-bordered table-striped-columns">
       <thead>
         <tr>
           <th>X</th>
