@@ -8,7 +8,6 @@ import { sendPoint } from "../services/apiService";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { addPoint } from "../state/points/pointSlice";
-import { Bounce, ToastContainer } from "react-toastify";
 import DataTable from "../components/DataTable";
 
 const containerBoxStyle: CSSProperties = {
