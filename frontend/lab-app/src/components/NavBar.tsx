@@ -1,10 +1,17 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { logout } from "../services/apiService";
 
 export function NavBar() {
   const location = useLocation();
+  const navigate = useNavigate();
   if (location.pathname === "/signup" || location.pathname === "/login") {
     return null;
   }
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
@@ -40,6 +47,11 @@ export function NavBar() {
             <Link className="nav-link" to="/about">
               About
             </Link>
+            <li className="nav-item">
+              <a className="nav-link" onClick={handleLogout} href="#">
+                Link
+              </a>
+            </li>
           </div>
         </div>
       </div>
