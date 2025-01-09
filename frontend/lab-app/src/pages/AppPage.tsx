@@ -12,7 +12,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 import DataTable from "../components/DataTable";
 
 const containerBoxStyle: CSSProperties = {
-  height: "90vh",
+  height: "60vh",
   border: "3px",
   boxSizing: "border-box",
 };
@@ -52,45 +52,37 @@ export function AppPage() {
   };
 
   return (
-    <div
-      className="d-flex justify-content-center align-items-center overflow-hidden"
-      style={containerBoxStyle}
-    >
-      <ToastContainer
-        position="bottom-right"
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition={Bounce}
-      />
-      <div className="box-with-inputs bg-dark text-white p-4 rounded shadow overflow-hidden ">
-        <TextInputWithLabel
-          inputId="x2"
-          label="X:"
-          onInput={(e) => setX(Number((e.target as HTMLInputElement).value))}
-        />
-        <TextInputWithLabel
-          inputId="y2"
-          label="Y:"
-          onInput={(e) => setY(Number((e.target as HTMLInputElement).value))}
-        />
-        <RadioFieldSet items={values} itemsvalues={values}>
-          R:
-        </RadioFieldSet>
+    <div className="d-flex flex-column justify-content-center align-items-center">
+      <div
+        className="d-flex justify-content-center align-items-center overflow-hidden"
+        style={containerBoxStyle}
+      >
+        <div className="box-with-inputs bg-dark text-white p-4 rounded shadow overflow-hidden ">
+          <TextInputWithLabel
+            inputId="x2"
+            label="X:"
+            onInput={(e) => setX(Number((e.target as HTMLInputElement).value))}
+          />
+          <TextInputWithLabel
+            inputId="y2"
+            label="Y:"
+            onInput={(e) => setY(Number((e.target as HTMLInputElement).value))}
+          />
+          <RadioFieldSet items={values} itemsvalues={values}>
+            R:
+          </RadioFieldSet>
 
-        <div className="d-flex justify-content-center overflow-hidden">
-          <FormSubmitButton onClick={handleClick}>Submit</FormSubmitButton>
+          <div className="d-flex justify-content-center overflow-hidden">
+            <FormSubmitButton onClick={handleClick}>Submit</FormSubmitButton>
+          </div>
+        </div>
+        <div className="ms-4 rounded-4 border border-1 overflow-hidden">
+          <Graph />
         </div>
       </div>
-      <div className="ms-4 rounded-4 border border-1 overflow-hidden">
-        <Graph />
+      <div className="mx-auto ">
+        <DataTable />
       </div>
-      <DataTable />
     </div>
   );
 }
