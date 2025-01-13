@@ -6,6 +6,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import util.Protected;
 
 import java.io.IOException;
 
@@ -16,6 +17,7 @@ public class PointResource {
 
 
     @GET
+    @Protected
     @Produces(MediaType.APPLICATION_JSON)
     public String getPoints() throws IOException {
         return elasticClient.getPoints();
