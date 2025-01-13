@@ -26,7 +26,7 @@ import java.util.List;
 @ApplicationScoped
 public class ElasticClient implements Serializable {
     String serverUrl = "http://localhost:9200";
-    String apiKey = "QkdUNzlKTUJkY3FFcXFrcjIwOVE6TWx1MWFfQlRSZTJkYTF5SWtxcHdIUQ==";
+    String apiKey = System.getenv("ELASTICSEARCH_API_KEY");
 
     RestClient restClient = RestClient
             .builder(HttpHost.create(serverUrl))
