@@ -18,7 +18,7 @@ export function NavBar() {
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <img
-            src="src/assets/panicemoji.png"
+            src="panicemoji.png"
             width={30}
             height={30}
             className="d-inline-block align-top"
