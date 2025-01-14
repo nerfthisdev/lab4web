@@ -1,11 +1,11 @@
 package endpoints;
 
 
-import co.elastic.clients.elasticsearch.core.IndexResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import data.GeometryValidator;
 import data.Point;
+import data.UserContext;
 import elasticlogic.ElasticClient;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -21,13 +21,19 @@ public class ValidatePointResource {
     @Inject
     ElasticClient elasticClient;
 
+    @Inject
+    UserContext userContext;
+
     @POST
     @Protected
     public Response validatePoint(String json) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
 
+            String username = userContext.getUsername();
             Point point = objectMapper.readValue(json, Point.class);
+            point.setUsername(username);
+            System.out.println(point);
             point.setFlag(GeometryValidator.isInsideArea(point.getX(), point.getY(), point.getR()));
             elasticClient.addPoint(point);
             ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
