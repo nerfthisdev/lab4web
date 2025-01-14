@@ -21,6 +21,18 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+apiClient.interceptors.response.use(
+  (response) => response, // Pass through valid responses
+  (error) => {
+    if (error.response?.status === 401) {
+      toast.error("Session expired. Please log in again.");
+      localStorage.removeItem("token"); // Clear the token from storage
+      window.location.href = "/login"; // Redirect to login
+    }
+    return Promise.reject(error); // Reject the error
+  }
+);
+
 export const sendPoint = async (data: {
   x: number;
   y: number;
