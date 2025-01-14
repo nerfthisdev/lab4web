@@ -43,7 +43,14 @@ export function AppPage() {
     var radius = selectedRadius;
     try {
       const response = await sendPoint({ x, y, radius });
-      dispatch(addPoint({ pos: [x, y], radius, flag: response.flag }));
+      dispatch(
+        addPoint({
+          pos: [x, y],
+          radius,
+          flag: response.flag,
+          username: response.username,
+        })
+      );
       console.log("Point saved to backend:", response);
     } catch (error) {
       console.error("Error saving point to backend");

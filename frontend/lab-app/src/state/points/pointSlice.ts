@@ -8,6 +8,7 @@ interface Point {
   pos: vec.Vector2;
   radius: number;
   flag: boolean;
+  username: string;
 }
 
 interface PointState {
@@ -56,7 +57,12 @@ const pointsSlice = createSlice({
   reducers: {
     addPoint: (
       state,
-      action: PayloadAction<{ pos: vec.Vector2; radius: number; flag: boolean }>
+      action: PayloadAction<{
+        pos: vec.Vector2;
+        radius: number;
+        flag: boolean;
+        username: string;
+      }>
     ) => {
       state.pointsArray.push(action.payload);
     },
@@ -78,6 +84,7 @@ const pointsSlice = createSlice({
           pos: [point.x, point.y],
           radius: point.r,
           flag: point.flag,
+          username: point.username,
         }));
         state.pointsArray = loadedPoints;
       })

@@ -40,7 +40,14 @@ export function Graph() {
     }
     try {
       const response = await sendPoint({ x, y, radius });
-      dispatch(addPoint({ pos: clickedPoint, radius, flag: response.flag }));
+      dispatch(
+        addPoint({
+          pos: clickedPoint,
+          radius,
+          flag: response.flag,
+          username: response.username,
+        })
+      );
       console.log("Point saved to backend:", response);
     } catch (error) {
       console.error("Error saving point to backend");
