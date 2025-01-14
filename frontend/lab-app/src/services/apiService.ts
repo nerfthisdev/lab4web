@@ -1,5 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { clearPoints, fetchPoints } from "../state/points/pointSlice";
+import { store } from "../state/store";
 
 export const apiClient = axios.create({
   baseURL: "/api",
@@ -77,6 +79,8 @@ export const login = async (credentials: {
       autoClose: 3000,
     });
 
+    store.dispatch(fetchPoints());
+
     return token;
   } catch (error: any) {
     toast.update(toastId, {
@@ -121,6 +125,7 @@ export const signup = async (credentials: {
 
 export const logout = () => {
   localStorage.removeItem("token");
+  store.dispatch(clearPoints());
   toast.success("Logged out successfully!");
 };
 
