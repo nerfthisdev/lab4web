@@ -17,6 +17,9 @@ import org.apache.http.HttpHost;
 import org.apache.http.message.BasicHeader;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.common.UUIDs;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -51,10 +54,20 @@ public class ElasticClient implements Serializable {
         }
     }
 
-    public String getPoints() throws IOException {
+    public String getPoints(String username) throws IOException {
+
+
+
         SearchRequest sr = SearchRequest.of(r -> r.index("points").size(10000));
         StringBuilder res = new StringBuilder("[ ");
-        var response = esClient.search(sr, Point.class);
+        var response = esClient.search(searchRequest -> searchRequest
+                .index("points")
+                .size(10000)
+                .query(queryBuilder ->
+                        queryBuilder.match(matchQBuilder->
+                                matchQBuilder.field("username")
+                                        .query(username))),Point.class
+        );
         ObjectMapper objectMapper = new ObjectMapper();
         List<Hit<Point>> hits = response.hits().hits();
         for (Hit<Point> hit: hits) {

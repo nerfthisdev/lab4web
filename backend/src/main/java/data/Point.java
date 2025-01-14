@@ -5,12 +5,14 @@ public class Point {
     double y;
     int r;
     boolean flag;
+    String username;
 
     public Point(double x, double y, int r) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.flag = false;
+        this.username = null;
     }
 
     public Point() {
@@ -45,12 +47,19 @@ public class Point {
         return flag;
     }
 
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setFlag(boolean flag) {
         this.flag = flag;
     }
 
     @Override
     public String toString() {
-        return "Point [x=" + x + ", y=" + y + ", r=" + r + ", flag=" + flag + "]";
+        return "Point [x=" + x + ", y=" + y + ", r=" + r + ", flag=" + flag + ", username=" + username + "]";
     }
 }

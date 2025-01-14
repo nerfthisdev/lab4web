@@ -1,5 +1,7 @@
 package filters;
 
+import data.UserContext;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -12,6 +14,9 @@ import util.Protected;
 @Provider
 @Protected
 public class JwtAuthFilter implements ContainerRequestFilter {
+    @Inject
+    UserContext userContext;
+
     @Override
     public void filter(ContainerRequestContext requestContext) {
         String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -28,6 +33,6 @@ public class JwtAuthFilter implements ContainerRequestFilter {
         }
 
         requestContext.setProperty("username", username);
-
+        userContext.setUsername(username);
     }
 }

@@ -1,5 +1,6 @@
 package endpoints;
 
+import data.UserContext;
 import elasticlogic.ElasticClient;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -15,12 +16,14 @@ public class PointResource {
     @Inject
     ElasticClient elasticClient;
 
+    @Inject
+    UserContext userContext;
 
     @GET
     @Protected
     @Produces(MediaType.APPLICATION_JSON)
     public String getPoints() throws IOException {
-        return elasticClient.getPoints();
+        return elasticClient.getPoints(userContext.getUsername());
     }
 
 }
