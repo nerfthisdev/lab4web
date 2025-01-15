@@ -22,14 +22,14 @@ apiClient.interceptors.request.use(
 );
 
 apiClient.interceptors.response.use(
-  (response) => response, // Pass through valid responses
+  (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       toast.error("Session expired. Please log in again.");
-      localStorage.removeItem("token"); // Clear the token from storage
-      window.location.href = "/login"; // Redirect to login
+      localStorage.removeItem("token");
+      window.location.href = "/login";
     }
-    return Promise.reject(error); // Reject the error
+    return Promise.reject(error);
   }
 );
 
