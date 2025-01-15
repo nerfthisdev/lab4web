@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { addPoint } from "../state/points/pointSlice";
 import DataTable from "../components/DataTable";
+import { toast } from "react-toastify";
 
 const containerBoxStyle: CSSProperties = {
   height: "60vh",
@@ -36,12 +37,35 @@ export function AppPage() {
   };
 
   const handleClick = async () => {
+    console.log("inputed x: " + x);
+    console.log("inputed y: " + y);
+
     if (pointExists(x, y)) {
       console.log(`Point already exists near x: ${x}, y: ${y}`);
       return;
     }
     var radius = selectedRadius;
     try {
+      if (Number.isNaN(x)) {
+        toast.error("x must be a number");
+        console.log("triggerred");
+        return;
+      }
+
+      if (Number.isNaN(y)) {
+        toast.error("y must be a nubmer");
+        return;
+      }
+
+      if (x < -3 && x > 5) {
+        toast.error("entered x must be between -3 and 5");
+        return;
+      }
+
+      if (y < -3 && y > 5) {
+        toast.error("entered y must be between -3 and 5");
+        return;
+      }
       const response = await sendPoint({ x, y, radius });
       dispatch(
         addPoint({
